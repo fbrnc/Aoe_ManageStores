@@ -1,0 +1,44 @@
+<?php /* @var $this Aoe_ManageStores_Block_System_Store_Grid */ ?>
+
+<style type="text/css">
+	span.additional-info { color: #aaa; font-size: smaller; }
+</style>
+
+<div class="grid">
+	<table class="data" cellspacing="0">
+		<thead>
+			<tr class="headings">
+				<th class="no-link"><span class="nobr"><a href="<?php echo  $this->getUrl('*/*/newWebsite') ?>"><?php echo Mage::helper('core')->__('Website Name') ?></a></span></th>
+				<th class="no-link"><span class="nobr"><a href="<?php echo  $this->getUrl('*/*/newGroup') ?>"><?php echo Mage::helper('core')->__('Store Name') ?></a></span></th>
+				<th class="no-link"><span class="nobr"><a href="<?php echo  $this->getUrl('*/*/newStore') ?>"><?php echo Mage::helper('core')->__('Store View Name') ?></a></span></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php $i = 0;?>
+		<?php $printedWebsite = $printedStoreGroup = false; ?>
+		<?php foreach ($this->getTableData() as $webSiteId => $webSiteData): ?>
+			<?php foreach ($webSiteData['_storeGroups'] as $storeGroupId => $storeGroupData): ?>
+				<?php foreach ($storeGroupData['_stores'] as $storeId => $storeData): ?>
+					<tr>
+
+						<?php if (!$printedWebsite): ?>
+							<td class="a-left" rowspan="<?php echo $webSiteData['_count'] ?>"><?php echo $this->renderWebsiteCell($webSiteData['_object']) ?></td>
+							<?php $printedWebsite = true; ?>
+						<?php endif ?>
+
+						<?php if (!$printedStoreGroup): ?>
+						<td class="a-left" rowspan="<?php echo $storeGroupData['_count'] ?>"><?php echo $this->renderStoreGroupCell($storeGroupData['_object']) ?></td>
+							<?php $printedStoreGroup = true; ?>
+						<?php endif ?>
+
+						<td class="a-left last"><?php echo $this->renderStoreCell($storeData['_object']); ?></td>
+
+					</tr>
+				<?php endforeach; ?>
+				<?php $printedStoreGroup = false; ?>
+			<?php endforeach; ?>
+			<?php $printedWebsite = false; ?>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>

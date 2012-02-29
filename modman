@@ -1,0 +1,3 @@
+app/etc/modules/*											app/etc/modules/
+app/code/community/Aoe/ManageStores							app/code/community/Aoe/ManageStores
+app/design/adminhtml/default/default/template/aoe_managestores	app/design/adminhtml/default/default/template/aoe_managestores

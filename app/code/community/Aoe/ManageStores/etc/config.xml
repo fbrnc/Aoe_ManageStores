@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Aoe_ManageStores>
+			<version>0.1.0</version>
+		</Aoe_ManageStores>
+	</modules>
+
+	<global>
+		<blocks>
+			<aoe_managestores>
+				<class>Aoe_ManageStores_Block</class>
+			</aoe_managestores>
+
+			<adminhtml>
+				<rewrite>
+					<system_store_grid>Aoe_ManageStores_Block_System_Store_Grid</system_store_grid>
+				</rewrite>
+			</adminhtml>
+		</blocks>
+	</global>
+</config>
