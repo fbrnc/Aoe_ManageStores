@@ -2,6 +2,7 @@
 
 <style type="text/css">
 	span.additional-info { color: #aaa; font-size: smaller; }
+	span.not-available { color: #aaa; font-style: italic; }
 </style>
 
 <div class="grid">
@@ -17,26 +18,58 @@
 		<?php $i = 0;?>
 		<?php $printedWebsite = $printedStoreGroup = false; ?>
 		<?php foreach ($this->getTableData() as $webSiteId => $webSiteData): ?>
-			<?php foreach ($webSiteData['_storeGroups'] as $storeGroupId => $storeGroupData): ?>
-				<?php foreach ($storeGroupData['_stores'] as $storeId => $storeData): ?>
-					<tr>
 
-						<?php if (!$printedWebsite): ?>
-							<td class="a-left" rowspan="<?php echo $webSiteData['_count'] ?>"><?php echo $this->renderWebsiteCell($webSiteData['_object']) ?></td>
-							<?php $printedWebsite = true; ?>
-						<?php endif ?>
+			<?php if (!isset($webSiteData['_storeGroups'])): ?>
 
-						<?php if (!$printedStoreGroup): ?>
-						<td class="a-left" rowspan="<?php echo $storeGroupData['_count'] ?>"><?php echo $this->renderStoreGroupCell($storeGroupData['_object']) ?></td>
-							<?php $printedStoreGroup = true; ?>
-						<?php endif ?>
+				<tr>
+					<?php if (!$printedWebsite): ?>
+						<td class="a-left" rowspan="<?php echo $webSiteData['_count'] ?>"><?php echo $this->renderWebsiteCell($webSiteData['_object']) ?></td>
+						<?php $printedWebsite = true; ?>
+					<?php endif ?>
 
-						<td class="a-left last"><?php echo $this->renderStoreCell($storeData['_object']); ?></td>
+					<td colspan="2" class="a-left last"><span class="not-available"><?php echo $this->__('No store groups and stores available') ?></span></td>
+				</tr>
 
-					</tr>
+			<?php else: ?>
+
+				<?php foreach ($webSiteData['_storeGroups'] as $storeGroupId => $storeGroupData): ?>
+					<?php if (!isset($storeGroupData['_stores'])): ?>
+						<tr>
+							<?php if (!$printedWebsite): ?>
+								<td class="a-left" rowspan="<?php echo $webSiteData['_count'] ?>"><?php echo $this->renderWebsiteCell($webSiteData['_object']) ?></td>
+								<?php $printedWebsite = true; ?>
+							<?php endif ?>
+
+							<?php if (!$printedStoreGroup): ?>
+							<td class="a-left" rowspan="<?php echo $storeGroupData['_count'] ?>"><?php echo $this->renderStoreGroupCell($storeGroupData['_object']) ?></td>
+								<?php $printedStoreGroup = true; ?>
+							<?php endif ?>
+
+							<td class="a-left last"><span class="not-available"><?php echo $this->__('No stores available') ?></span></td>
+						</tr>
+					<?php else: ?>
+
+						<?php foreach ($storeGroupData['_stores'] as $storeId => $storeData): ?>
+							<tr>
+								<?php if (!$printedWebsite): ?>
+									<td class="a-left" rowspan="<?php echo $webSiteData['_count'] ?>"><?php echo $this->renderWebsiteCell($webSiteData['_object']) ?></td>
+									<?php $printedWebsite = true; ?>
+								<?php endif ?>
+
+								<?php if (!$printedStoreGroup): ?>
+								<td class="a-left" rowspan="<?php echo $storeGroupData['_count'] ?>"><?php echo $this->renderStoreGroupCell($storeGroupData['_object']) ?></td>
+									<?php $printedStoreGroup = true; ?>
+								<?php endif ?>
+
+								<td class="a-left last"><?php echo $this->renderStoreCell($storeData['_object']); ?></td>
+							</tr>
+						<?php endforeach; ?>
+					<?php endif; ?>
+					<?php $printedStoreGroup = false; ?>
 				<?php endforeach; ?>
-				<?php $printedStoreGroup = false; ?>
-			<?php endforeach; ?>
+
+				<?php endif; ?>
+
 			<?php $printedWebsite = false; ?>
 		<?php endforeach; ?>
 		</tbody>

@@ -24,8 +24,10 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 		$data = array();
 		foreach (Mage::getModel('core/website')->getCollection() as $website) { /* @var $website Mage_Core_Model_Website */
 			$data[$website->getId()]['_object'] = $website;
+			$data[$website->getId()]['_count'] = 0;
 			foreach ($website->getGroupCollection() as $storeGroup) { /* @var $storeGroup Mage_Core_Model_Store_Group */
 				$data[$website->getId()]['_storeGroups'][$storeGroup->getId()]['_object'] = $storeGroup;
+				$data[$website->getId()]['_storeGroups'][$storeGroup->getId()]['_count'] = 0;
 				foreach ($storeGroup->getStoreCollection() as $store) { /* @var $store Mage_Core_Model_Store */
 					$data[$website->getId()]['_count']++;
 					$data[$website->getId()]['_storeGroups'][$storeGroup->getId()]['_count']++;
@@ -37,13 +39,36 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 		// set default store groups and stores
 		foreach ($data as $websiteId => $webSiteData) {
 			$website = $webSiteData['_object']; /* @var $website Mage_Core_Model_Website */
-			$defaultStoreGroup = $data[$websiteId]['_storeGroups'][$website->getDefaultGroupId()]['_object']; /* @var $defaultStoreGroup Mage_Core_Model_Store_Group */
-			$defaultStoreGroup->setData('is_default_in_website', true);
+
+			$defaultGroupId = $website->getDefaultGroupId();
+
+			if ($defaultGroupId) {
+				$defaultStoreGroup = $data[$websiteId]['_storeGroups'][$defaultGroupId]['_object']; /* @var $defaultStoreGroup Mage_Core_Model_Store_Group */
+				$defaultStoreGroup->setData('is_default_in_website', true);
+			}
+
+			// show line for store groups that have no stores
+			if ($data[$websiteId]['_count'] == 0) {
+				$data[$websiteId]['_count'] = 1;
+			}
+
+			if (!isset($data[$websiteId]['_storeGroups'])) {
+				continue;
+			}
 
 			foreach ($data[$websiteId]['_storeGroups'] as $storeGroupId => $storeGroupData) {
 				$storeGroup = $storeGroupData['_object']; /* @var $storeGroup Mage_Core_Model_Store_Group */
-				$defaultStore = $data[$websiteId]['_storeGroups'][$storeGroupId]['_stores'][$storeGroup->getDefaultStoreId()]['_object'];
-				$defaultStore->setData('is_default_in_storegroup', true);
+				$defaultStoreId = $storeGroup->getDefaultStoreId();
+				if ($defaultStoreId) {
+					$defaultStore = $data[$websiteId]['_storeGroups'][$storeGroupId]['_stores'][$defaultStoreId]['_object']; /* @var $defaultStore Mage_Core_Model_Store */
+					$defaultStore->setData('is_default_in_storegroup', true);
+				}
+
+				// show line for store groups that have no stores
+				if ($data[$websiteId]['_storeGroups'][$storeGroupId]['_count'] == 0) {
+					$data[$websiteId]['_storeGroups'][$storeGroupId]['_count'] = 1;
+					$data[$websiteId]['_count']++;
+				}
 			}
 		}
 		return $data;
