@@ -7,12 +7,25 @@
  */
 class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_System_Store_Grid {
 
+	protected $renderLinks = true;
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		parent::__construct();
 		$this->setTemplate('aoe_managestores/managestores.phtml');
+	}
+
+	/**
+	 * Set render links
+	 *
+	 * @param $renderLinks
+	 * @return Aoe_ManageStores_Block_System_Store_Grid
+	 */
+	public function setRenderLinks($renderLinks) {
+		$this->renderLinks = $renderLinks;
+		return $this;
 	}
 
 	/**
@@ -81,7 +94,11 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 	 * @return string
 	 */
 	public function renderWebsiteCell(Mage_Core_Model_Website $website) {
-		$result = '<a title="Id: '.$website->getId().'" href="'.$this->getUrl('*/*/editWebsite', array('website_id'=>$website->getWebsiteId())).'">' . $website->getName() . '</a>';
+		if ($this->renderLinks) {
+			$result = '<a title="Id: '.$website->getId().'" href="'.$this->getUrl('*/*/editWebsite', array('website_id'=>$website->getWebsiteId())).'">' . $website->getName() . '</a>';
+		} else {
+			$result = '<span title="Id: '.$website->getId().'">' . $website->getName() . '</span>';
+		}
 		if ($website->getIsDefault()) {
 			$result = '<strong>'.$result.'</strong>';
 		}
@@ -96,7 +113,11 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 	 * @return string
 	 */
 	public function renderStoreGroupCell(Mage_Core_Model_Store_Group $storeGroup) {
-		$result = '<a title="Id: '.$storeGroup->getId().'" href="'.$this->getUrl('*/*/editGroup', array('group_id'=>$storeGroup->getGroupId())).'">' . $storeGroup->getName() . '</a>';
+		if ($this->renderLinks) {
+			$result = '<a title="Id: '.$storeGroup->getId().'" href="'.$this->getUrl('*/*/editGroup', array('group_id'=>$storeGroup->getGroupId())).'">' . $storeGroup->getName() . '</a>';
+		} else {
+			$result = '<span title="Id: '.$storeGroup->getId().'">' . $storeGroup->getName() . '</span>';
+		}
 		if ($storeGroup->getData('is_default_in_website')) {
 			$result = '<strong>'.$result.'</strong>';
 		}
@@ -114,7 +135,11 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 	 * @return string
 	 */
 	public function renderStoreCell(Mage_Core_Model_Store $store) {
-		$result = '<a title="Id: '.$store->getId().'" href="'.$this->getUrl('*/*/editStore', array('store_id'=>$store->getStoreId())).'">' . $store->getName() . '</a>';
+		if ($this->renderLinks) {
+			$result = '<a title="Id: '.$store->getId().'" href="'.$this->getUrl('*/*/editStore', array('store_id'=>$store->getStoreId())).'">' . $store->getName() . '</a>';
+		} else {
+			$result = '<span title="Id: '.$store->getId().'">' . $store->getName() . '</span>';
+		}
 		if (!$store->getIsActive()) {
 			$result = '<strike>'.$result.'</strike>';
 		}

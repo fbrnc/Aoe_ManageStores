@@ -9,9 +9,15 @@
 	<table class="data" cellspacing="0">
 		<thead>
 			<tr class="headings">
-				<th class="no-link"><span class="nobr"><a href="<?php echo  $this->getUrl('*/*/newWebsite') ?>"><?php echo Mage::helper('core')->__('Website Name') ?></a></span></th>
-				<th class="no-link"><span class="nobr"><a href="<?php echo  $this->getUrl('*/*/newGroup') ?>"><?php echo Mage::helper('core')->__('Store Name') ?></a></span></th>
-				<th class="no-link"><span class="nobr"><a href="<?php echo  $this->getUrl('*/*/newStore') ?>"><?php echo Mage::helper('core')->__('Store View Name') ?></a></span></th>
+				<?php if ($this->renderLinks): ?>
+					<th class="no-link"><span class="nobr"><a href="<?php echo $this->getUrl('*/*/newWebsite') ?>"><?php echo Mage::helper('core')->__('Website Name') ?></a></span></th>
+					<th class="no-link"><span class="nobr"><a href="<?php echo $this->getUrl('*/*/newGroup') ?>"><?php echo Mage::helper('core')->__('Store Name') ?></a></span></th>
+					<th class="no-link"><span class="nobr"><a href="<?php echo $this->getUrl('*/*/newStore') ?>"><?php echo Mage::helper('core')->__('Store View Name') ?></a></span></th>
+				<?php else: ?>
+				<th class="no-link"><span class="nobr"><span><?php echo Mage::helper('core')->__('Website Name') ?></span></span></th>
+				<th class="no-link"><span class="nobr"><span><?php echo Mage::helper('core')->__('Store Name') ?></span></span></th>
+				<th class="no-link"><span class="nobr"><span><?php echo Mage::helper('core')->__('Store View Name') ?></span></span></th>
+				<?php endif; ?>
 			</tr>
 		</thead>
 		<tbody>
