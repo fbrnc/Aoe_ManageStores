@@ -102,7 +102,7 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 		if ($website->getIsDefault()) {
 			$result = '<strong>'.$result.'</strong>';
 		}
-		$result .= ' <br /><span class="additional-info">(' . $this->__('Code') . ': ' . $website->getCode().')</span>';
+		$result .= ' <br /><span class="additional-info">(' . $this->__('ID') . ': ' . $website->getId().' / ' . $this->__('Code') . ': ' . $website->getCode().')</span>';
 		return $result;
 	}
 
@@ -124,7 +124,7 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 
 		$rootCategory = Mage::getModel('catalog/category')->load($storeGroup->getRootCategoryId());
 
-		$result .= ' <br /><span class="additional-info">(' . $this->__('Root Category') . ': ' . $rootCategory->getName().')</span>';
+		$result .= ' <br /><span class="additional-info">(' . $this->__('ID') . ': ' . $storeGroup->getId().' / ' . $this->__('Root Category') . ': ' . $rootCategory->getName().')</span>';
 		return $result;
 	}
 
@@ -146,7 +146,7 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 		if ($store->getData('is_default_in_storegroup')) {
 			$result = '<strong>'.$result.'</strong>';
 		}
-		$result .= ' <br /><span class="additional-info">(' . $this->__('Code') . ': ' . $store->getCode().')</span>';
+		$result .= ' <br /><span class="additional-info">(' . $this->__('ID') . ': ' . $store->getId().' / ' . $this->__('Code') . ': ' . $store->getCode().')</span>';
 		return $result;
 	}
 
