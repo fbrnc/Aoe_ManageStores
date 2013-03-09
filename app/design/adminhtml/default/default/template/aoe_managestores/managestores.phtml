@@ -5,6 +5,8 @@
 	span.not-available { color: #aaa; font-style: italic; }
 </style>
 
+<p><a href="<?php echo $this->getUrl('*/*/*', array('classic' => 1)) ?>"><?php echo $this->__('Classic view'); ?></a></p>
+
 <div class="grid">
 	<table class="data" cellspacing="0">
 		<thead>
@@ -25,7 +27,7 @@
 		<?php $printedWebsite = $printedStoreGroup = false; ?>
 		<?php foreach ($this->getTableData() as $webSiteId => $webSiteData): ?>
 
-			<?php if (!isset($webSiteData['_storeGroups'])): ?>
+			<?php if (count($webSiteData['_storeGroups']) == 0): ?>
 
 				<tr>
 					<?php if (!$printedWebsite): ?>
@@ -39,7 +41,7 @@
 			<?php else: ?>
 
 				<?php foreach ($webSiteData['_storeGroups'] as $storeGroupId => $storeGroupData): ?>
-					<?php if (!isset($storeGroupData['_stores'])): ?>
+					<?php if (count($storeGroupData['_stores']) == 0): ?>
 						<tr>
 							<?php if (!$printedWebsite): ?>
 								<td class="a-left" rowspan="<?php echo $webSiteData['_count'] ?>"><?php echo $this->renderWebsiteCell($webSiteData['_object']) ?></td>
