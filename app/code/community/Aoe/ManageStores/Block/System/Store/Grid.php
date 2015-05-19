@@ -105,7 +105,8 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 		if ($website->getIsDefault()) {
 			$result = '<strong>'.$result.'</strong>';
 		}
-		$result .= ' <br /><span class="additional-info">(' . $this->__('ID') . ': ' . $website->getId().' / ' . $this->__('Code') . ': ' . $website->getCode().')</span>';
+		$result .= ' <br /><span class="additional-info">(' . $this->__('ID') . ': ' . $website->getId().' / ' .
+            $this->__('Code') . ': ' . $website->getCode(). ' ' . $this->__('Currency') . ': ' . $website->getBaseCurrencyCode().')</span>';
 		return $result;
 	}
 
@@ -149,7 +150,8 @@ class Aoe_ManageStores_Block_System_Store_Grid extends Mage_Adminhtml_Block_Syst
 		if ($store->getData('is_default_in_storegroup')) {
 			$result = '<strong>'.$result.'</strong>';
 		}
-		$result .= ' <br /><span class="additional-info">(' . $this->__('ID') . ': ' . $store->getId().' / ' . $this->__('Code') . ': ' . $store->getCode().')</span>';
+		$result .= ' <br /><span class="additional-info">(' . $this->__('ID') . ': ' . $store->getId().' / ' .
+            $this->__('Code') . ': ' . $store->getCode() . ' ' . $this->__('Currency') . ': ' . $store->getCurrentCurrencyCode(). ')</span>';
 		return $result;
 	}
 
